@@ -44,14 +44,17 @@ class Player:
     self.update_score()
     return "{name} has {cards} cards and a score of {score}.".format(name=self.name, cards=len(self.cards), score=self.score)
 
-class Game:
-  def __init__(self):
+class Game():
+  def __init__(self, player_name):
     self.playing_area = {}
-    self.player_one = Player(input("What is your name?"))
+    self.player_one = Player(player_name)
     self.player_two = Player("The Computer")
     self.deck = Deck()
     self.winner = ""
-    ready = input("Are you ready to play? (YES to begin/NO to end game)").upper
+    self.ready_check()
+
+  def ready_check(self):
+    ready = input("Are you ready to play? (YES to begin/NO to end game)").upper()
     if ready == "YES":
       self.play_game()
     if ready == "NO":
@@ -64,4 +67,11 @@ class Game:
     self.player_one.update_score()
     self.player_two.update_score()
     if self.player_one.score > self.player_two.score:
-      print("{player_one_name} has beaten {player_two_name} with a score of {player_one_score} and {player_one_cards} cards. {player_two_name} had a score of {player_two_score} and {player_two_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, player_one_score=self.player_one.score, player_two_score = self.player_two_score, player_one_cards = len(self.player_one.cards), player_two_cards = len(self.player_two.cards)))
+      print("{player_one_name} has beaten {player_two_name} with a score of {player_one_score} and {player_one_cards} cards. {player_two_name} had a score of {player_two_score} and {player_two_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, player_one_score=self.player_one.score, player_two_score=self.player_two_score, player_one_cards=len(self.player_one.cards), player_two_cards=len(self.player_two.cards)))
+    elif self.player_two.score > self.player_one.score:
+      print("{player_two_name} has beaten {player_one_name} with a score of {player_two_score} and {player_two_cards} cards. {player_one_name} had a score of {player_one_score} and {player_one_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, player_one_score=self.player_one.score, player_two_score=self.player_two.score, player_one_cards=len(self.player_one.cards), player_two_cards=len(self.player_two.cards)))
+    else:
+      print("It's a tie! {player_one_name} had a score of {score} and {player_one_cards} cards at the end of the game. {player_two_name} had a score of {score} and {player_two_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, score=self.player_one.score, player_one_cards=len(self.player_one.cards), player_two_cards=len(self.player_two.cards)))
+
+player_name = input("What is your name?")
+new_game = Game(player_name)
