@@ -24,6 +24,14 @@ class Deck:
   def shuffle(self):
     random.shuffle(self.deck)
 
+  def deal(self, player_one, player_two):
+    count = 0
+    while self.deck:
+      if self.deck:
+        player_one.cards.append(self.deck.pop(0))
+      if self.deck:
+        player_two.cards.append(self.deck.pop(0))
+
   def __repr__(self):
     list = []
     for card in self.deck:
@@ -51,9 +59,10 @@ class Game():
     self.player_two = Player("The Computer")
     self.deck = Deck()
     self.winner = ""
-    self.ready_check()
+    print(self.deck)
+    self.deck.deal(self.player_one, self.player_two)
 
-  def ready_check(self):
+  def start(self):
     ready = input("Are you ready to play? (YES to begin/NO to end game)").upper()
     if ready == "YES":
       self.play_game()
@@ -67,7 +76,7 @@ class Game():
     self.player_one.update_score()
     self.player_two.update_score()
     if self.player_one.score > self.player_two.score:
-      print("{player_one_name} has beaten {player_two_name} with a score of {player_one_score} and {player_one_cards} cards. {player_two_name} had a score of {player_two_score} and {player_two_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, player_one_score=self.player_one.score, player_two_score=self.player_two_score, player_one_cards=len(self.player_one.cards), player_two_cards=len(self.player_two.cards)))
+      print("{player_one_name} has beaten {player_two_name} with a score of {player_one_score} and {player_one_cards} cards. {player_two_name} had a score of {player_two_score} and {player_two_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, player_one_score=self.player_one.score, player_two_score=self.player_two.score, player_one_cards=len(self.player_one.cards), player_two_cards=len(self.player_two.cards)))
     elif self.player_two.score > self.player_one.score:
       print("{player_two_name} has beaten {player_one_name} with a score of {player_two_score} and {player_two_cards} cards. {player_one_name} had a score of {player_one_score} and {player_one_cards} cards.".format(player_one_name=self.player_one.name, player_two_name=self.player_two.name, player_one_score=self.player_one.score, player_two_score=self.player_two.score, player_one_cards=len(self.player_one.cards), player_two_cards=len(self.player_two.cards)))
     else:
@@ -75,3 +84,4 @@ class Game():
 
 player_name = input("What is your name?")
 new_game = Game(player_name)
+new_game.start()
